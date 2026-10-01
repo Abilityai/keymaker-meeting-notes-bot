@@ -1,0 +1,29 @@
+# meeting-notes-bot - migrated to Trinity with /agent-dev:agent-fleet-migrate
+# Source: a plain Claude Code agent (CLAUDE.md + one skill). Nothing rewritten; a template,
+# a .gitignore and this header were added so Trinity can run it as a persistent agent.
+name: meeting-notes-bot
+display_name: "Meeting notes bot"
+description: |
+  Turns call transcripts dropped into inbox/ into client-ready notes in notes/: decisions,
+  action items with owners and dates, open questions, and a three-line summary for the client.
+  Migrated as-is from a Claude Code agent; now runs inside the Keymaker agency, called by
+  Keymaker Delivery after client calls.
+version: "0.1.0"
+author: "Keymaker (keymaker.agency)"
+resources:
+  cpu: "1"
+  memory: "2g"
+use_cases:
+  - "Summarise yesterday's Harbor & Vale call (transcript in inbox/)"
+  - "Turn this transcript into client notes"
+capabilities:
+  - transcript-summaries
+  - action-item-extraction
+commands:
+  - name: summarize
+    description: One transcript in inbox/ into notes/<date>-<client>.md
+    usage: /summarize <transcript file>
+folders:
+  expose: true      # notes/ readable by Keymaker Delivery
+  consume: true
+credentials: {}
